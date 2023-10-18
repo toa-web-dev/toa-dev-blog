@@ -1,17 +1,13 @@
-import { getPostSlugs } from '@/src/lib/api';
-import Link from 'next/link';
+import Postlist from '@/src/components/Postlist';
+import { getAllPosts } from '@/src/lib/api';
+
 
 export default function Page() {
-  const postList = getPostSlugs();
+  const slugAndDate = getAllPosts(['slug','date']);  
+  
   return (
     <div>
-      <ol>
-        {postList.map((el, idx) => (
-          <li key={idx}>
-            <Link href={`/post/${el.replace(/\s/g, '-')}`}>{el}</Link>
-          </li>
-        ))}
-      </ol>
+      <Postlist data={ slugAndDate }/>
     </div>
   );
 }

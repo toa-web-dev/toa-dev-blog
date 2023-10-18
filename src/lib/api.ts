@@ -5,7 +5,7 @@ import matter from 'gray-matter';
 const postsDirectory = join(process.cwd(), 'src/data/_posts');
 
 /**
- * @desc 게시글 원문 파일의 이름을 담은 배열을 반환합니다.
+ * @desc 게시글 마크다운 파일의 이름을 담은 배열을 반환합니다.
  * @returns string[]
  */
 export function getPostSlugs(): string[] {
@@ -20,10 +20,9 @@ export function getPostSlugs(): string[] {
 }
 
 /**
- * @desc 게시글의 정보를 객체 형태로 반환한다.
- * @param  slug 찾고자 하는 게시글 파일의 확장자를 제외한 이름
- * @param fields fields 배열에 추가한 요소가 반환값의 key값이 됨
- * @return {} { [key: string]: string }
+ * @desc 게시글의 정보를 객체로 반환합니다.
+ * @param slug 찾고자 하는 게시글 파일의 확장자를 제외한 이름
+ * @param fields fields 배열에 추가한 요소가 반환값의 key값이 됩니다.
  */
 export function getPostBySlug(slug: string, fields: string[] = []) {
   const fullPath = join(postsDirectory, `${slug}.md`);
@@ -54,11 +53,12 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
   return items;
 }
 
+/**
+ * @desc 모든 게시글의 원하는 정보를 JSON 형태로 반환합니다.
+ * @param fields fields 배열에 추가한 요소가 반환값의 key값이 됩니다.
+ */
 export function getAllPosts(fields: string[] = []) {
   const slugs = getPostSlugs();
-  const posts = slugs
-    .map((slug) => getPostBySlug(slug, fields))
-    // sort posts by date in descending order
-    .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
+  const posts = slugs.map((slug) => getPostBySlug(slug, fields));
   return posts;
 }
