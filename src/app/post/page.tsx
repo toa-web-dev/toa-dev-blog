@@ -1,8 +1,17 @@
-export default function Post() {
-    return (
-      <div>
-          첫번째 게시글 페이지
-      </div>
-    )
-  }
-  
+import { getPostSlugs } from '@/src/lib/api';
+import Link from 'next/link';
+
+export default function Page() {
+  const postList = getPostSlugs();
+  return (
+    <div>
+      <ol>
+        {postList.map((el, idx) => (
+          <li key={idx}>
+            <Link href={`/post/${el.replace(/\s/g, '-')}`}>{el}</Link>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
