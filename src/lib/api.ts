@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
+import PostType from '../interface/post';
 
 const postsDirectory = join(process.cwd(), 'src/data/_posts');
 
@@ -30,12 +31,10 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
   // fullPath와 일치하는 파일이 없으면 오류 페이지 출력
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
+  console.log('content: ',content);
+  console.log('data: ',data);
 
-  type Items = {
-    [key: string]: string;
-  };
-
-  const items: Items = {};
+  const items:PostType = {};
 
   // Ensure only the minimal needed data is exposed
   fields.forEach((field) => {
