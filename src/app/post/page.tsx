@@ -1,5 +1,4 @@
 import Postlist from '@/src/components/Postlist';
-import PostType from '@/src/interface/post';
 import { getAllPosts } from '@/src/lib/api';
 
 
