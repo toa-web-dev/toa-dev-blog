@@ -1,8 +1,8 @@
-export default function Post() {
-    return (
-      <div>
-          첫번째 게시글 페이지
-      </div>
-    )
-  }
-  
+import Postlist from '@/src/components/Postlist';
+import { getAllPosts } from '@/src/lib/api';
+
+export default function Page() {
+  const postListData = getAllPosts(['slug', 'date']);
+
+  return <div>{postListData && <Postlist data={postListData} />}</div>;
+}
