@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import PostType from '../interface/post';
+import {PostType} from '../interface/post';
 
 type OrderedData = Pick<PostType, 'slug' | 'date'>;
 type Props = {
@@ -10,6 +10,7 @@ type Props = {
 };
 
 export default function Postlist({ data }: Props) {
+
   const newestData = [...data].sort((post1, post2) =>
     post1.date > post2.date ? -1 : 1
   );

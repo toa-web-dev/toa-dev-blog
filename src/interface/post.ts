@@ -1,4 +1,4 @@
-interface PostType {
+export interface PostType {
   slug: string;
   title: string;
   author: string;
@@ -7,4 +7,4 @@ interface PostType {
   [key: string]: any;
 }
 
-export default PostType;
+export type OrderType = Pick<PostType, 'slug' | 'date'>;

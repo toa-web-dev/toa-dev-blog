@@ -1,12 +1,10 @@
 import Postlist from '@/src/components/Postlist';
 import { getAllPosts } from '@/src/lib/api';
-import PostType from '@/src/interface/post';
+import { OrderType } from '@/src/interface/post';
 
-type OrderedData = Pick<PostType, 'slug' | 'date'>;
-
-export default function Page() {
+export default function PostList() {
   const postList = getAllPosts(['slug', 'date']);
-  const postListData = postList as OrderedData[];
+  const postListData = postList as OrderType[];
 
   return <div>{postListData && <Postlist data={postListData} />}</div>;
 }

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
-import PostType from '../interface/post';
+import { PostType, OrderType } from '../interface/post';
 import { notFound } from 'next/navigation';
 
 const postsDirectory = join(process.cwd(), 'src/data/_posts');
@@ -62,7 +62,23 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
  */
 export function getAllPosts(fields: string[] = []) {
   const slugs = getPostSlugs();
-  const posts = slugs && slugs.map((slug) => getPostBySlug(slug, fields));
+  const posts = slugs.map((slug) => getPostBySlug(slug, fields));
   return posts;
 }
 
+export function getPrevNextSlugs(slug: string) {
+  const Posts = getAllPosts(['slug', 'date']);
+  const sortedPosts = Posts as OrderType[];
+  sortedPosts.sort((post1, post2) => (post1.date > post2.date ? 1 : -1));
+
+  const sortedSlugs = sortedPosts.map((el) => el.slug);
+  const index = sortedSlugs.indexOf(slug);
+
+  if (index === -1) {
+    return { prev: null, next: null };
+  }
+  const prev = index > 0 ? sortedSlugs[index - 1] : null;
+  const next = index < sortedSlugs.length - 1 ? sortedSlugs[index + 1] : null;
+
+  return { prev, next };
+}
