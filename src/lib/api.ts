@@ -7,16 +7,17 @@ import { notFound } from 'next/navigation';
 const postsDirectory = join(process.cwd(), 'src/data/_posts');
 
 /**
- * @desc 게시글 마크다운 파일의 이름을 담은 배열을 반환합니다.
+ * @desc 게시글 마크다운 파일의 이름인 slug를 담은 배열을 반환합니다.
  * @returns string[]
  */
-export function getPostSlugs(): string[] | undefined {
+export function getPostSlugs(): string[] {
   try {
     const slugFile = fs.readdirSync(postsDirectory);
     const titleArray = slugFile.map((el) => el.replace(/\.md$/, ''));
     return titleArray;
   } catch (error) {
     console.error('디렉토리 데이터를 가져오는 중 오류 발생:', error);
+    return [];
   }
 }
 
@@ -29,11 +30,11 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
   try {
     const fullPath = join(postsDirectory, `${slug}.md`);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
-    
-    if (fileContents === undefined) throw Error;
+
+    if (fileContents === undefined) return notFound();
 
     const { data, content } = matter(fileContents);
-    let items: PostType = {};
+    let items: Partial<PostType> = {};
 
     // Ensure only the minimal needed data is exposed
     fields.forEach((field) => {
@@ -56,7 +57,7 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
 }
 
 /**
- * @desc 모든 게시글의 원하는 정보를 JSON 형태로 반환합니다.
+ * @desc 모든 게시글의 정보를 JSON 형태로 반환합니다.
  * @param fields fields 배열에 추가한 요소가 반환값의 key값이 됩니다.
  */
 export function getAllPosts(fields: string[] = []) {
@@ -64,3 +65,4 @@ export function getAllPosts(fields: string[] = []) {
   const posts = slugs && slugs.map((slug) => getPostBySlug(slug, fields));
   return posts;
 }
+
