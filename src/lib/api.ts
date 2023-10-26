@@ -92,9 +92,11 @@ export function getTocData(mdContent: string) {
 
   while ((match = headerRegex.exec(mdContent)) !== null) {
     const headerText = match[1];
-    const headerLevel = match[0].match(/#/g).length; // 헤더 레벨 계산
-    headerLevel < prevLevel && paragraph++;
-    prevLevel = headerLevel;
+    const headerLevel = match[0].match(/#/g)?.length; // 헤더 레벨 계산
+    if (headerLevel) {
+      headerLevel < prevLevel && paragraph++;
+      prevLevel = headerLevel;
+    }
     headers.push({ paragraph: paragraph, level: headerLevel, text: headerText });
   }
 
