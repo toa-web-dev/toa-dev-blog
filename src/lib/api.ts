@@ -82,3 +82,21 @@ export function getPrevNextSlugs(slug: string) {
 
   return { prev, next };
 }
+
+export function getTocData(mdContent: string) {
+  const headerRegex = /^#{1,6}\s+(.+)/gm;
+  const headers = [];
+  let prevLevel = 0;
+  let paragraph = 0;
+  let match;
+
+  while ((match = headerRegex.exec(mdContent)) !== null) {
+    const headerText = match[1];
+    const headerLevel = match[0].match(/#/g).length; // 헤더 레벨 계산
+    headerLevel < prevLevel && paragraph++;
+    prevLevel = headerLevel;
+    headers.push({ paragraph: paragraph, level: headerLevel, text: headerText });
+  }
+
+  return headers;
+}
