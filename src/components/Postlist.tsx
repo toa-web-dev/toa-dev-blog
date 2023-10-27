@@ -24,12 +24,16 @@ export default function Postlist({ data }: Props) {
       <button onClick={() => setOrder('new')}>new</button>
       <button onClick={() => setOrder('old')}>old</button>
       <ol>
-        {orderData.map((el, idx) => (
-          <li key={idx}>
-            <Link href={`/post/${el.slug.replace(/\s/g, '-')}`}>{el.slug}</Link>
-            <p>{el.date && `${el.date.getFullYear()}-${el.date.getMonth()}-${el.date.getDate()}`}</p>
-          </li>
-        ))}
+        {orderData.map((el, idx) => {
+          const url = `/post/${el.slug.replace(/\s/g, '-')}`;
+          const date = `${el.date.getFullYear()}-${el.date.getMonth()}-${el.date.getDate()}`;
+          return (
+            <li key={idx}>
+              <Link href={url}>{el.slug}</Link>
+              <p>{el.date && date}</p>
+            </li>
+          );
+        })}
       </ol>
     </>
   );

@@ -2,6 +2,7 @@ import { getPostBySlug, getPrevNextSlugs } from '@/src/lib/api';
 import markdownToHtml from '@/src/lib/markdownToHtml';
 import Link from 'next/link';
 import { PostType } from '@/src/interface/post';
+import Toc from '@/src/components/Toc';
 
 type Params = {
   slug: string;
@@ -13,7 +14,6 @@ export default async function Post({ params }: { params: Params }) {
   const spacedPathname = pathname.split('-').join(' ');
   const initPostInfo = getPostBySlug(spacedPathname, ['slug', 'content']);
   const postInfo = initPostInfo as PostInfo;
-
   // 변수 html을 캐싱해 최적화 하기
   const html = await markdownToHtml(postInfo.content);
 
@@ -21,6 +21,7 @@ export default async function Post({ params }: { params: Params }) {
 
   return (
     <>
+      <Toc mdContent={postInfo.content}/>
       <article>
         <div dangerouslySetInnerHTML={{ __html: html }} />
       </article>
