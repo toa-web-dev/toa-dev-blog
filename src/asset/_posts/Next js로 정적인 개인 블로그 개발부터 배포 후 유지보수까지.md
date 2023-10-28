@@ -5,7 +5,7 @@ category: NextJS
 tags:
   - NextJS
 ---
-![next](/asset/next.svg)
+![next](/next.svg)
 
 ## 서론
 lorem ipsum, lorem ipsum lorem ipsum...
