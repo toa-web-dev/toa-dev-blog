@@ -2,7 +2,8 @@ import { getPostBySlug, getPrevNextSlugs } from '@/src/lib/api';
 import markdownToHtml from '@/src/lib/markdownToHtml';
 import Link from 'next/link';
 import { PostType } from '@/src/interface/post';
-import Toc from '@/src/components/Toc';
+import TableOfContent from '@/src/components/TableOfContent';
+import setHeaderTagId from '@/src/lib/setHeaderTagId';
 
 type Params = {
   slug: string;
@@ -14,16 +15,18 @@ export default async function Post({ params }: { params: Params }) {
   const spacedPathname = pathname.split('-').join(' ');
   const initPostInfo = getPostBySlug(spacedPathname, ['slug', 'content']);
   const postInfo = initPostInfo as PostInfo;
-  // 변수 html을 캐싱해 최적화 하기
-  const html = await markdownToHtml(postInfo.content);
+  const HTML = await markdownToHtml(postInfo.content);
+  const HTMLwithHeaderTagId = setHeaderTagId(HTML);
 
+  
   const { prev, next } = getPrevNextSlugs(postInfo.slug);
 
   return (
     <>
-      <Toc mdContent={postInfo.content}/>
+      {/* // 목차는 마크다운을 정규표현식으로 분석? */}
+      <TableOfContent mdContent={postInfo.content}/>
       <article>
-        <div dangerouslySetInnerHTML={{ __html: html }} />
+        <div dangerouslySetInnerHTML={{ __html: HTMLwithHeaderTagId }} />
       </article>
       <div>
         {next && (
