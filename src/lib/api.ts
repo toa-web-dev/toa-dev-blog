@@ -4,7 +4,7 @@ import matter from 'gray-matter';
 import { PostType, OrderType } from '../interface/post';
 import { notFound } from 'next/navigation';
 
-const postsDirectory = join(process.cwd(), 'src/data/_posts');
+const postsDirectory = join(process.cwd(), 'src/asset/_posts');
 
 /**
  * @desc 게시글 마크다운 파일의 이름인 slug를 담은 배열을 반환합니다.
@@ -92,7 +92,7 @@ export function getTocData(mdContent: string) {
 
   while ((match = headerRegex.exec(mdContent)) !== null) {
     const headerText = match[1];
-    const headerLevel = match[0].match(/#/g)?.length; // 헤더 레벨 계산
+    const headerLevel = match[0].match(/#/g)?.length;
     if (headerLevel) {
       headerLevel < prevLevel && paragraph++;
       prevLevel = headerLevel;
