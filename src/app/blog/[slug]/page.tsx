@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { PostType } from '@/src/interface/post';
 import TableOfContent from '@/src/components/TableOfContent';
 import setHeaderTagId from '@/src/lib/setHeaderTagId';
+import Section from '@/src/components/Section';
 
 type Params = {
   slug: string;
@@ -18,30 +19,36 @@ export default async function Post({ params }: { params: Params }) {
   const HTML = await markdownToHtml(postInfo.content);
   const HTMLwithHeaderTagId = setHeaderTagId(HTML);
 
-  
   const { prev, next } = getPrevNextSlugs(postInfo.slug);
 
   return (
     <>
-      {/* // 목차는 마크다운을 정규표현식으로 분석? */}
-      <TableOfContent mdContent={postInfo.content}/>
-      <article>
-        <div dangerouslySetInnerHTML={{ __html: HTMLwithHeaderTagId }} />
-      </article>
-      <div>
-        {next && (
-          <Link href={`/post/${next}`}>
-            다음 게시글 보기 →: <span>{next}</span>
-          </Link>
-        )}
-      </div>
-      <div>
-        {prev && (
-          <Link href={`/post/${prev}`}>
-            이전 게시글 보기 ←: <span>{prev}</span>
-          </Link>
-        )}
-      </div>
+      <Section>
+        <article style={{ gridColumn: '1 / 9' }}>
+          <div dangerouslySetInnerHTML={{ __html: HTMLwithHeaderTagId }} />
+        </article>
+        <div style={{ gridColumn: '9 / 11' }}>
+          <TableOfContent mdContent={postInfo.content} />
+        </div>
+      </Section>
+      <Section>
+        <nav>
+          <div>
+            {next && (
+              <Link href={`/blog/${next}`}>
+                다음 게시글 보기 →: <span>{next}</span>
+              </Link>
+            )}
+          </div>
+          <div>
+            {prev && (
+              <Link href={`/blog/${prev}`}>
+                이전 게시글 보기 ←: <span>{prev}</span>
+              </Link>
+            )}
+          </div>
+        </nav>
+      </Section>
     </>
   );
 }
