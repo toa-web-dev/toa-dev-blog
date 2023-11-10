@@ -1,0 +1,28 @@
+.order_button_container {
+  grid-row: 1;
+  grid-column: 9;
+  margin-bottom: 2rem;
+  button {
+    font-size: 0.9rem;
+    padding: 0.25rem;
+    cursor: pointer;
+    background-color: transparent;
+    &:nth-child(1) {
+      border-top-left-radius: 1rem;
+      border-bottom-left-radius: 1rem;
+    }
+    &:nth-child(2) {
+      border-left: 0;
+      border-top-right-radius: 1rem;
+      border-bottom-right-radius: 1rem;
+    }
+  }
+}
+.article_entry {
+  margin-bottom: 2rem;
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+}
