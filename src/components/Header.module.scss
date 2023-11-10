@@ -1,0 +1,21 @@
+.site_header {
+  height: 100px;
+  > div {
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: center;
+    height: 100%;
+  }
+}
+
+.nav {
+  display: flex;
+  justify-content: flex-end;
+  ul {
+    display: flex;
+    gap: 0.5rem 1.5rem;
+    a {
+      font-weight: 500;
+    }
+  }
+}
