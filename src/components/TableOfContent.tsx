@@ -5,6 +5,7 @@ export default function TableOfContent({ mdContent }: { mdContent: string }) {
 
   return (
     <nav>
+      <b>목차</b>
       <ul>
         {mdHeaderArr.map((el, idx) => (
           <li key={idx} style={{ marginLeft: `${(el.level - 1) * 20}px` }}>
